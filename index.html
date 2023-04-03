@@ -15,19 +15,7 @@
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', 'https://stablediffusionapi.com/api/v3/img2img');
 		xhr.setRequestHeader('Content-Type', 'application/json');
-		xhr.onclick = function() {
-		  if (xhr.status >= 200 && xhr.status < 300) {
-		    const data = JSON.parse(xhr.responseText);
-		    const print_warning= 'POST request successful'
-		    console.log(data);
-		  }else{
-		  	const print_warning= 'POST request unsuccessful'
-   			 console.error('POST request failed!');
-			  }
-		};
-		xhr.onerror = function() {
-		  console.error('Request failed.');
-		};
+		
 		xhr.send(JSON.stringify({
 		  	key: 'h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a',
 			prompt: 'boy on bench',
