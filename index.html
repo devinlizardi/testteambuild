@@ -34,6 +34,7 @@
             response = await request(f"{baseurl}/posts/2", method="GET", headers=headers)
             print(f"GET request=> status:{response.status}, json:{await response.json()}")
 
+            
             # POST
             body = json.dumps({
                         "key": "h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a",
@@ -49,6 +50,7 @@
                         "steps": 20,
                         "scheduler": "UniPCMultistepScheduler"
                         })
+            print("body works")
             new_post = await request(f"{baseurl2}/posts", body=body, method="POST", headers=headers)
             print(f"POST request=> status:{new_post.status}, json:{await new_post.json()}")
 
