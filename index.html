@@ -18,8 +18,10 @@
 		xhr.onload = function() {
 		  if (xhr.status === 200) {
 		    const data = JSON.parse(xhr.responseText);
-		    console.log(data);
-		  }
+		    console.log("POST request successful);
+		  }else{
+   			 console.error('POST request failed!');
+			  }
 		};
 		xhr.onerror = function() {
 		  console.error('Request failed.');
@@ -34,7 +36,7 @@
 
 		 
 		 
-		 document.getElementById("result").innerHTML = "The funky function is triggered !";
+		 document.getElementById("result").innerHTML = "The final function is triggered !";
          	
 		}
 		
