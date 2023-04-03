@@ -1,57 +1,41 @@
 <!DOCTYPE html>
-
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+        <title>Current Time</title>
 
-<head>
-  <title> Author Dashoard|Open Science Forum </title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/CSS Files/defult_style.css">
-</head>
-<?php
-   ob_start();
-   session_start();
-?>
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    </head>
 
-<body>
-    
-    <!-- Create Page Header -->
-    <div id = "page_header"> Open Science Forums </div>
+    <body>
+        <button onclick="stableDfFunction()" >Generate New Image</button>
+        <p id="current-time"></p>
 
-	<!-- Create Main Nav_bar -->
-    <nav id="clickable_header"> 
+        <script>
+		function stableDfFunction() {
+   		 fetch('https://stablediffusionapi.com/api/v3/text2img', {
+    			method: 'POST',
+   		      headers: {
+        		'Accept': 'application/json',
+        		'Content-Type': 'application/json'
+  			  },
+    			body: JSON.stringify({
+			"key": "h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a",
+			"prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",
+ "negative_prompt": "((out of frame)), ((extra fingers)), mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), (((tiling))), ((naked)), ((tile)), ((fleshpile)), ((ugly)), (((abstract))), blurry, ((bad anatomy)), ((bad proportions)), ((extra limbs)), cloned face, (((skinny))), glitchy, ((extra breasts)), ((double torso)), ((extra arms)), ((extra hands)), ((mangled fingers)), ((missing breasts)), (missing lips), ((ugly face)), ((fat)), ((extra legs)), anime",
+ "width": "512",
+ "height": "512",
+ "samples": "1",
+ "num_inference_steps": "20"
+			}))
+			})
+   		.then(response => response.json())
+   		.then(response => console.log(JSON.stringify(response)))
+		}
 		
- 	    <a href = "/index.php">   Home |      </a>
-	    <a href = "/Submit_a_Manuscript_Main.html">  Submit a Manuscript |     </a>
-	    
-	    <?php if (empty($_SESSION['username'])){
-	      ?>
-	          <a href = "/Create_an_Account.php">  Create an Account |   </a> 		
-                  <a href = "/login.php"> Login   </a> 
-                 <?php }  
-                     else{ ?>
-                     	     <a href = "/Author_Dashboard.php">  Author Dashboard|     </a>
-	                     <a href = "/Reviewer_Dashboard.php">  Reviewer Dashboard|   </a>
-	                     <a href = "/Submit_a_Manuscript_Main.php"> Submit a Manuscript  </a>
-	                     <a href = "/logout.php"> Logout   </a> 
-               <?php  } ?>   
-	    
-	    
-	</nav>
-
-  <!-- Create User Dashboard Box -->
-	<div class = "sidenav"> 
-		<header id = "dashboard_header"> Author Dashboard </header>		
-		<section > <a href="#"> Incomplete Submissions </a></section> 
-		<section > <a href="#"> Manuscripts Awaiting Review </a></section> 
-		<section > <a href="#"> Published Manuscripts </a></section> 	
-	</div>	
-	
-	<!-- Display Paper Info as Page's Main Text -->
-	<div id = "paper_info">
-		<!-- <section ><p> Info about papers goes here. Info concerning each paper is seperated by a border. While this work helps us to understand how and when network closure leads firms to settle on suboptimal solutions due to early successes, the more general role that adaptive biases play in network effects remains undertheorized. For example, current theory leaves unaddressed the question of how network structure shapes a firm’s responses to poor initial experiences with highly valuable solutions. In contrast, the broader work on organizational learning suggest that such instances are common.  </p> </section > -->
-	</div>
-	
-</body>
-
+        </script>
+    </body>
 </html>
