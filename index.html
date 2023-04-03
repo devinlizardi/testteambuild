@@ -45,7 +45,7 @@
                         })
             print("bodly works")
             print(body)
-            new_post = await request(f"{baseurl}/posts", body=body, method="POST", headers=headers)
+            new_post = await request("https://stablediffusionapi.com/api/v3/img2img/", body=body, method="POST", headers=headers)
             print(f"POST request=> status:{new_post.status}, json:{await new_post.json()}")
 
             # PUT
