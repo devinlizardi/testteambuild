@@ -51,6 +51,7 @@
                         "scheduler": "UniPCMultistepScheduler"
                         })
             print("body works")
+            print("body")
             new_post = await request(f"{baseurl2}/posts", body=body, method="POST", headers=headers)
             print(f"POST request=> status:{new_post.status}, json:{await new_post.json()}")
 
