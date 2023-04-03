@@ -18,8 +18,10 @@
 		xhr.onload = function() {
 		  if (xhr.status >= 200 && xhr.status < 300) {
 		    const data = JSON.parse(xhr.responseText);
-		    console.log('POST request successful');
+		    const print_warning= 'POST request successful'
+		    console.log(data);
 		  }else{
+		  	const print_warning= 'POST request unsuccessful'
    			 console.error('POST request failed!');
 			  }
 		};
@@ -36,7 +38,7 @@
 
 		 
 		 
-		 document.getElementById("result").innerHTML = "The feudal function is triggered !";
+		 document.getElementById("result").innerHTML = print_warning;
          	
 		}
 		
