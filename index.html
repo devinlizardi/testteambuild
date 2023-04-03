@@ -13,6 +13,33 @@
     <body>
 	   <script>
 		function stableDfFunction() {
+		 
+		 fetch('https://stablediffusionapi.com/api/v3/img2img', {
+  			method: 'POST',
+  			body: JSON.stringify({
+ 			   data: 'example data'
+			   "key": "h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a",
+			   "prompt": "a boy on a benvh",
+                           "model_id": "midjourney",
+			   "width": "512",
+			   "guidance": "7.5",
+			   "init_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png",
+			   "height": "512",
+                           "prompt_strength" : ".25",
+                           "samples": "1",
+                           "steps": 20,
+                           "scheduler": "UniPCMultistepScheduler"
+ 				 }),
+ 				 headers: {
+ 				   'Content-Type': 'application/json'
+				  }
+				})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error(error));
+
+		 
+		 
 		 document.getElementById("result").innerHTML = "The function fun() is triggered !";
          	
 		}
