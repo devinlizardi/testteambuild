@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-        <title>Current Time</title>
+    <title>GET, POST, PUT, DELETE example</title>
 
-        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    </head>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
 
-    <body>
-        <button onclick="stableDfFunction()" >Generate New Image</button>
-        <p id="current-time"></p>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <py-config>
+      [[fetch]]
+      files = ["/request.py"]
+    </py-config>
+  </head>
 
-        <script>
-		function stableDfFunction() {
-   		 fetch('https://stablediffusionapi.com/api/v3/text2img', {
-    			method: 'POST',
-   		      headers: {
-        		'Accept': 'application/json',
-        		'Content-Type': 'application/json',
+  <body><p>
+    Hello world request example! <br>
+    Here is the output of your request:
+    </p>
+    <py-script>
+        import asyncio
+        import json
+        from request import request  # import our request function.
+
+        async def main():
+            baseurl = "https://jsonplaceholder.typicode.com"
+		baseurl2 = "https://stablediffusionapi.com/api/v3/img2img"
+
+            headers = {"Content-type": "application/json"
              'Access-Control-Allow-Origin': '*',
              'Access-Control-Allow-Headers': 'Origin, Accept, Accept-  Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization',
              'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
-  			  },
-    			body: JSON.stringify({
-			"key": "h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a",
-			"prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",
- "negative_prompt": "((out of frame)), ((extra fingers)), mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), (((tiling))), ((naked)), ((tile)), ((fleshpile)), ((ugly)), (((abstract))), blurry, ((bad anatomy)), ((bad proportions)), ((extra limbs)), cloned face, (((skinny))), glitchy, ((extra breasts)), ((double torso)), ((extra arms)), ((extra hands)), ((mangled fingers)), ((missing breasts)), (missing lips), ((ugly face)), ((fat)), ((extra legs)), anime",
- "width": "512",
- "height": "512",
- "samples": "1",
- "num_inference_steps": "20"
-			}))
-			})
-   		.then(response => response.json())
-   		.then(response => console.log(JSON.stringify(response)))
-		}
-		
-        </script>
-    </body>
+}
+            # GET
+            response = await request(f"{baseurl}/posts/2", method="GET", headers=headers)
+            print(f"GET request=> status:{response.status}, json:{await response.json()}")
+
+            # POST
+            body = json.dumps({"title": "test_title", "body": "test body", "userId": 1})
+            new_post = await request(f"{baseurl2}/posts", body=body, method="POST", headers=headers)
+            print(f"POST request=> status:{new_post.status}, json:{await new_post.json()}")
+
+
+
+        asyncio.ensure_future(main())
+    </py-script>
+
+  </body>
 </html>
