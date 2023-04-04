@@ -1,76 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <title>GET, POST, PUT, DELETE example</title>
+        <title>Current Time</title>
 
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    </head>
 
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <py-config>
-      [[fetch]]
-      files = ["/request.py"]
-    </py-config>
-  </head>
+    <body>
+        <button onclick="stableDfFunction()" >Generate New Image</button>
+        <p id="current-time"></p>
 
-  <body><p>
-    Hello world request example! <br>
-    Here is the output of your request:
-    </p>
-    <py-script>
-        import asyncio
-        import json
-        from request import request  # import our request function.
-
-        async def main():
-            baseurl = "https://stablediffusionapi.com/api/v3/img2img"
-            
-            # POST
-            body = json.dumps({
-                        "key": "h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a",
-                        "prompt": "red dogs",
-                        #"negative_prompt": "cartoon, anime",
-                        "model_id": "midjourney",
-                        "width": "512",
-                        "guidance": "7.5",
-                        "init_image": "https://raw.githubusercontent.com/CompVis/stable-diffusion/main/data/inpainting_examples/overture-creations-5sI6fQgYIuo.png",
-                        "height": "512",
-                        "prompt_strength" : ".25",
-                        "samples": "1",
-                        "steps": 20,
-                        "scheduler": "UniPCMultistepScheduler"
-                        })
-            print("bodly works")
-            print(body)
-            new_post = await request("https://stablediffusionapi.com/api/v3/img2img/", body=body, method="POST", headers=headers)
-            print(f"POST request=> status:{new_post.status}, json:{await new_post.json()}")
-
-            # PUT
-            body = json.dumps({"id": 1, "title": "test_title", "body": "test body", "userId": 2})
-            new_post = await request(f"{baseurl}/posts/1", body=body, method="PUT", headers=headers)
-            print(f"PUT request=> status:{new_post.status}, json:{await new_post.json()}")
-
-            # DELETE
-            new_post = await request(f"{baseurl}/posts/1", method="DELETE", headers=headers)
-            print(f"DELETE request=> status:{new_post.status}, json:{await new_post.json()}")
-
-        asyncio.ensure_future(main())
-    </py-script>
-
-    <div>
-    <p>
-        You can also use other methods. See fetch documentation: <br>
-        https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
-    </p>
-    </div>
-    <div>
-        <p>
-        See pyodide documentation for what to do with a FetchResponse object: <br>
-        https://pyodide.org/en/stable/usage/api/python-api.html#pyodide.http.FetchResponse
-        </p>
-    </div>
-  </body>
+        <script>
+		function stableDfFunction() {
+   		 fetch('https://stablediffusionapi.com/api/v3/text2img', {
+    			method: 'POST',
+   		      headers: {
+        		'Accept': 'application/json',
+        		'Content-Type': 'application/json',
+             'Access-Control-Allow-Origin': '*'
+             'Access-Control-Allow-Headers': 'Origin, Accept, Accept-  Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, X-Response-Time, X-PINGOTHER, X-CSRF-Token,Authorization'
+             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS'
+  			  },
+    			body: JSON.stringify({
+			"key": "h7XnkWBQ7kZAcrxzVJ5rKaMSl3fPZJ0YrLBCauk0jBAyJg33mErwgXijfD1a",
+			"prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner)), blue eyes, shaved side haircut, hyper detail, cinematic lighting, magic neon, dark red city, Canon EOS R3, nikon, f/1.4, ISO 200, 1/160s, 8K, RAW, unedited, symmetrical balance, in-frame, 8K",
+ "negative_prompt": "((out of frame)), ((extra fingers)), mutated hands, ((poorly drawn hands)), ((poorly drawn face)), (((mutation))), (((deformed))), (((tiling))), ((naked)), ((tile)), ((fleshpile)), ((ugly)), (((abstract))), blurry, ((bad anatomy)), ((bad proportions)), ((extra limbs)), cloned face, (((skinny))), glitchy, ((extra breasts)), ((double torso)), ((extra arms)), ((extra hands)), ((mangled fingers)), ((missing breasts)), (missing lips), ((ugly face)), ((fat)), ((extra legs)), anime",
+ "width": "512",
+ "height": "512",
+ "samples": "1",
+ "num_inference_steps": "20"
+			}))
+			})
+   		.then(response => response.json())
+   		.then(response => console.log(JSON.stringify(response)))
+		}
+		
+        </script>
+    </body>
 </html>
